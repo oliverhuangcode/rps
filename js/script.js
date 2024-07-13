@@ -4,7 +4,6 @@ function getComputerChoice() {
   let choice = "";
   // GET random number from 0-2 for rock paper scissors
   let randomNum = Math.floor(Math.random() * 3);
-  console.log(randomNum);
   // IF random number is 0 THEN
   if (randomNum === 0) {
     // SET choice to rock
@@ -24,16 +23,16 @@ function getComputerChoice() {
   return choice;
 }
 
-getComputerChoice()
-
-// FUNC getHumanChoice
-  // SET choice to empty string
-  // WHILE choice is empty
-    // GET choice of rock paper scissors
-    // IF user input is valid "rock" "paper" "scissors" THEN
-      // SET choice to input
-    // ENDIF
-    // ELSE
-      // PRINT invalid option
-    // ENDELSE 
-  // RETURN users choice
+function getHumanChoice() {
+  let choice = "";
+  while (choice === "") {
+    let input = prompt("Enter your choice (rock | paper | scissors)").toLowerCase();
+    if (input === "rock" | input === "paper" | input === "scissors") {
+      choice = input;
+    }
+    else {
+      console.log("Invalid choice - Try again");
+    }
+  }
+  return choice;
+}
