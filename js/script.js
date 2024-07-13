@@ -25,3 +25,15 @@ function getComputerChoice() {
 }
 
 getComputerChoice()
+
+// FUNC getHumanChoice
+  // SET choice to empty string
+  // WHILE choice is empty
+    // GET choice of rock paper scissors
+    // IF user input is valid "rock" "paper" "scissors" THEN
+      // SET choice to input
+    // ENDIF
+    // ELSE
+      // PRINT invalid option
+    // ENDELSE 
+  // RETURN users choice
