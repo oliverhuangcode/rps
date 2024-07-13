@@ -1,6 +1,13 @@
 let humanScore = 0;
 let computerScore = 0;
 
+const humanSelection = getHumanChoice();
+const computerSelection = getComputerChoice();
+
+playRound(humanSelection, computerSelection);
+console.log(`Your score: ${humanScore}`);
+console.log(`Computer score: ${computerScore}`);
+
 // CREATE function getComputerChoice
 function getComputerChoice() {
   // SET choice to empty string
@@ -40,42 +47,51 @@ function getHumanChoice() {
   return choice;
 }
 
-// FUNC playRound(humanChoice, computerChoice)
-  // INIT outcome
-  // IF humanChoice equal to computerChoice
-    // PRINT draw
-    // RETURN
-  // ENDIF
-  // ELSE IF humanChoice is rock THEN
-    // IF computerChoice is paper THEN
-      // SET outcome to lose
-    // ENDIF
-    // IF computerChoice is scissors THEN
-      // SET outcome to win
-    // ENDIF
-  // ENDIF
-  // ELSE IF humanChoice is paper THEN
-    // IF computerChoice is rock THEN
-      // SET outcome to win
-    // ENDIF
-    // IF computerChoice is scissors THEN
-      // SET outcome to lose
-    // ENDIF
-  // ENDIF
-  // ELSE IF humanChoice is scissors
-    // IF computerChoice is rock THEN
-      // SET outcome to lose
-    // ENDIF
-    // IF computerChoice is paper THEN
-      // SET outcome to win
-    // ENDIF
-  // ENDIF
-  // IF outcome is win
-    // PRINT win message
-    // INCREMENT humanScore
-  // ENDIF
-  // ELSE IF outcome is lose
-    // PRINT lose message
-    // INCREMENT computerScore
-  // ENDIF
+function playRound(humanChoice, computerChoice) {
+  let outcome = "";
+  console.log(`You played ${humanChoice}`);
+  console.log(`The computer played ${computerChoice}`);
+
+  // Check if draw
+  if (humanChoice == computerChoice) {
+    console.log("Draw!");
+  }
+  else { 
+    // Check all win and lose conditions
+    if (humanChoice === "rock") {
+      if (computerChoice === "paper") {
+        outcome = "lose";
+      }
+      else if (computerChoice === "scissors") {
+        outcome = "win";
+      }
+    }
+    else if (humanChoice === "paper") {
+      if (computerChoice === "rock") {
+        outcome = "win";
+      }
+      else if (computerChoice === "scissors") {
+        outcome = "lose";
+      }
+    }
+    else if (humanChoice === "scissors") {
+      if (computerChoice === "rock") {
+        outcome = "lose";
+      }
+      else if (computerChoice === "paper") {
+        outcome = "win";
+      }
+    }
+  }
   
+  // Increment human if win
+  if (outcome === "win") {
+    console.log("You win!");
+    humanScore++;
+  }
+  // Increment computer if lose
+  else if (outcome === "lose") {
+    console.log("You lose.");
+    computerScore++;
+  }
+}
