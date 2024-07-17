@@ -1,38 +1,35 @@
-playGame(5);
+// playGame(5);
 
-function playGame(rounds) {
-  let humanScore = 0;
-  let computerScore = 0;
+const rockBtn = document.querySelector("#rock");
+const paperBtn = document.querySelector("#paper");
+const scissorsBtn = document.querySelector("#scissors");
 
-  for (let round = 1; round <= rounds; round++) {
-    console.log(`Round ${round}`);
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
+const humanChoiceText = document.createElement("p");
+const computerChoiceText = document.createElement("p");
 
-    let outcome = playRound(humanSelection, computerSelection);
+let choices = document.querySelector(".choices");
 
-    checkOutcome(outcome);
+choices.addEventListener('click', (event) => {
+  let humanSelection = event.target.id;
+  const computerSelection = getComputerChoice();
 
-    console.log(`Your score: ${humanScore}`);
-    console.log(`Computer score: ${computerScore}`);
+  let outcome = playRound(humanSelection, computerSelection, humanChoiceText, computerChoiceText);
+  checkOutcome(outcome);
+})
+
+function checkOutcome(outcome) {
+  // Increment human if win
+  if (outcome === "win") {
+    console.log("You win!");
   }
-  function checkOutcome(outcome) {
-    // Increment human if win
-    if (outcome === "win") {
-      console.log("You win!");
-      humanScore++;
-    }
-    // Increment computer if lose
-    else if (outcome === "lose") {
-      console.log("You lose.");
-      computerScore++;
-    }
-    else if (outcome === "draw") {
-      console.log("Draw!");
-    }
+  // Increment computer if lose
+  else if (outcome === "lose") {
+    console.log("You lose.");
+  }
+  else if (outcome === "draw") {
+    console.log("Draw!");
   }
 }
-
 
 // CREATE function getComputerChoice
 function getComputerChoice() {
@@ -73,10 +70,15 @@ function getHumanChoice() {
   return choice;
 }
 
-function playRound(humanChoice, computerChoice) {
+function playRound(humanChoice, computerChoice, humanChoiceText, computerChoiceText) {
   let outcome = "";
-  console.log(`You played ${humanChoice}`);
-  console.log(`The computer played ${computerChoice}`);
+  const results = document.querySelector(".results");
+
+  humanChoiceText.textContent = `You played ${humanChoice}`
+  computerChoiceText.textContent = `The computer played ${computerChoice}`
+
+  results.appendChild(humanChoiceText);
+  results.appendChild(computerChoiceText);
 
   // Check if draw
   if (humanChoice == computerChoice) {
