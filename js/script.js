@@ -7,29 +7,57 @@ const scissorsBtn = document.querySelector("#scissors");
 const humanChoiceText = document.createElement("p");
 const computerChoiceText = document.createElement("p");
 
-let choices = document.querySelector(".choices");
+const humanScoreText = document.createElement("p");
+const computerScoreText = document.createElement("p");
+
+const score = document.querySelector(".score");
+
+humanScoreText.textContent = "Your Score: 0";
+computerScoreText.textContent = "Computer Score: 0";
+
+score.appendChild(humanScoreText);
+score.appendChild(computerScoreText);
+
+let humanScore = 0;
+let computerScore = 0;
+
+const choices = document.querySelector(".choices");
+
+const winner = document.querySelector(".winner");
+
+
 
 choices.addEventListener('click', (event) => {
-  let humanSelection = event.target.id;
-  const computerSelection = getComputerChoice();
-
-  let outcome = playRound(humanSelection, computerSelection, humanChoiceText, computerChoiceText);
-  checkOutcome(outcome);
+  if (humanScore !== 5 && computerScore !== 5) {
+    let humanSelection = event.target.id;
+    const computerSelection = getComputerChoice();
+  
+    let outcome = playRound(humanSelection, computerSelection, humanChoiceText, computerChoiceText);
+    checkOutcome(outcome);
+  }
+  if (humanScore == 5) {
+    winner.textContent = "You Won!!";
+  }
+  else if (computerScore == 5) {
+    winner.textContent = "Computer Won.";
+  }
 })
 
 function checkOutcome(outcome) {
   // Increment human if win
   if (outcome === "win") {
-    console.log("You win!");
+    humanScore++;
+    humanScoreText.textContent = `Your Score: ${humanScore}`;
   }
   // Increment computer if lose
   else if (outcome === "lose") {
-    console.log("You lose.");
+    computerScore++;
+    computerScoreText.textContent = `Computer Score: ${computerScore}`;
   }
   else if (outcome === "draw") {
-    console.log("Draw!");
   }
 }
+
 
 // CREATE function getComputerChoice
 function getComputerChoice() {
