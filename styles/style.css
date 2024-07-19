@@ -1,0 +1,65 @@
+* {
+  font-family: Roboto;
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.round {
+  text-align: center;
+  font-weight: 700;
+  font-size: 66px;
+  margin-bottom: 24px;
+}
+.score {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0 40px;
+  font-weight: 700;
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+
+.choices {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.choices button {
+  background-repeat: no-repeat;
+  background-color: #9381FF;
+  border-radius: 20%;
+  background-size: 150px 150px;
+  background-position: center;
+  width: 200px;
+  height: 200px;
+  transition: all .2s ease-in-out;
+  border: none;
+  cursor: pointer;
+}
+
+.choices #rock {
+  background-image: url(../images/rock1.png);
+}
+
+.choices #paper {
+  background-image: url(../images/paper1.png);
+}
+
+.choices #scissors {
+  background-image: url(../images/scissors1.png);
+}
+
+.choices button:hover {
+  background-color: #8474e6;
+  transform: scale(1.1); 
+}
+
+.choices button:active {
+  background-color: #675ab3;
+}

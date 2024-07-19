@@ -1,15 +1,10 @@
-// playGame(5);
-
-const rockBtn = document.querySelector("#rock");
-const paperBtn = document.querySelector("#paper");
-const scissorsBtn = document.querySelector("#scissors");
-
+// Text for what the players picked
 const humanChoiceText = document.createElement("p");
 const computerChoiceText = document.createElement("p");
 
+// Score
 const humanScoreText = document.createElement("p");
 const computerScoreText = document.createElement("p");
-
 const score = document.querySelector(".score");
 
 humanScoreText.textContent = "Your Score: 0";
@@ -21,25 +16,45 @@ score.appendChild(computerScoreText);
 let humanScore = 0;
 let computerScore = 0;
 
-const choices = document.querySelector(".choices");
+// Round
+let roundCount = 1;
+const round = document.querySelector(".round");
+round.textContent = `Round ${roundCount}`;
 
+// Winner
 const winner = document.querySelector(".winner");
 
-
+const choices = document.querySelector(".choices");
 
 choices.addEventListener('click', (event) => {
-  if (humanScore !== 5 && computerScore !== 5) {
-    let humanSelection = event.target.id;
-    const computerSelection = getComputerChoice();
-  
-    let outcome = playRound(humanSelection, computerSelection, humanChoiceText, computerChoiceText);
-    checkOutcome(outcome);
+  let humanSelection = event.target.id;
+  let validChoice = 0;
+  switch(humanSelection) {
+    case "rock":
+    case "paper":
+    case "scissors":
+      validChoice = 1;
+      break;
+    default:
+      // No choice made;
+      break;
   }
-  if (humanScore == 5) {
-    winner.textContent = "You Won!!";
-  }
-  else if (computerScore == 5) {
-    winner.textContent = "Computer Won.";
+  if (validChoice) {
+    if (humanScore !== 5 && computerScore !== 5) {
+      console.log(event.target);
+      const computerSelection = getComputerChoice();
+    
+      let outcome = playRound(humanSelection, computerSelection, humanChoiceText, computerChoiceText);
+      roundCount++;
+      round.textContent = `Round ${roundCount}`;
+      checkOutcome(outcome);
+    }
+    if (humanScore == 5) {
+      winner.textContent = "You Won!!";
+    }
+    else if (computerScore == 5) {
+      winner.textContent = "Computer Won.";
+    }
   }
 })
 
@@ -81,20 +96,6 @@ function getComputerChoice() {
     choice = "scissors";
   }
 
-  return choice;
-}
-
-function getHumanChoice() {
-  let choice = "";
-  while (choice === "") {
-    let input = prompt("Enter your choice (rock | paper | scissors)").toLowerCase();
-    if (input === "rock" | input === "paper" | input === "scissors") {
-      choice = input;
-    }
-    else {
-      console.log("Invalid choice - Try again");
-    }
-  }
   return choice;
 }
 
