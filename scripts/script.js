@@ -212,6 +212,7 @@ function playRound(humanChoice, computerChoice) {
   return outcome;
 }
 
+// Check each option to find if you lose or won
 function checkMatchUp(humanChoice, computerChoice) {
   // Check all win and lose conditions
   if (humanChoice === "rock") {
