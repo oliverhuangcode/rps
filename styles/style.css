@@ -6,59 +6,63 @@
 body {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #9381FF;
+  color: white;
 }
 
 .title {
   text-align: center;
   font-weight: 700;
-  font-size: 66px;
-  margin: 32px 0;
+  font-size: 48px;
+  margin: 14px 0px;
 }
 
 .round {
   text-align: center;
   font-weight: 700;
-  font-size: 42px;
+  font-size: 32px;
   margin-bottom: 24px;
 }
+
 .score {
   display: flex;
   justify-content: space-evenly;
   padding: 0 40px;
   font-weight: 700;
-  font-size: 36px;
-  margin-bottom: 40px;
+  font-size: 32px;
+  margin-bottom: 24px;
 }
 
 .choices {
   display: flex;
   justify-content: center;
-  gap: 50px;
+  gap: 60px;
 }
 
-.choice {
+.choice{
   background-repeat: no-repeat;
   background-color: #9381FF;
   border-radius: 20%;
-  background-size: 150px 150px;
+  background-size: 100px 100px;
   background-position: center;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   transition: all .2s ease-in-out;
   border: none;
   cursor: pointer;
 }
 
-.choice#rock {
+#rock {
   background-image: url(../images/rock1.png);
 }
 
-.choice#paper {
+#paper {
   background-image: url(../images/paper1.png);
 }
 
-.choice#scissors {
+#scissors {
   background-image: url(../images/scissors1.png);
 }
 
@@ -71,18 +75,36 @@ button:active {
   background-color: #675ab3;
 }
 
-.choices p {
+.choices p,
+.computerContainer p {
   text-align: center;
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 600;
-  margin-top: 18px;
-  margin-bottom: 18px;
+  margin-top: 10px;
+  margin-bottom: 16px;
 }
 
 .choiceContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.computerContainer {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.computerIcon {
+  width: 150px;
+  height: 150px;
+  background-color: #9381FF;
+  border-radius: 20px;
+  background-size: 100px 100px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .continue {
@@ -104,4 +126,71 @@ button:active {
   cursor: pointer;
   transition: all .2s ease-in-out;
   display: flex;
+}
+
+.winner {
+  text-align: center;
+  font-size: 60px;
+  font-weight: 500;
+}
+
+.menu {
+  position: absolute;
+  z-index: 2;
+  width: 300px;
+  padding: 30px;
+  background-color: #F8F7FF;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu p{
+  font-size: 48px;
+  font-weight: 600;
+  text-align: center;
+  color: #9381FF;
+  margin-bottom: 24px;
+}
+
+.menu button {
+  border: none;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  background: #9381FF;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: black;
+  opacity: 0.5;
+}
+
+.footer {
+  background-color: #8474e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 50px;
+  margin-top: auto;
+}
+
+.footer a{
+  text-decoration: none;
+  color: white;
 }

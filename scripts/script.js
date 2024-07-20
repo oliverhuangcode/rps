@@ -22,32 +22,29 @@ const round = document.querySelector(".round");
 round.textContent = `Round ${roundCount}`;
 
 // Winner
-const winner = document.querySelector(".winner");
-
 const choices = document.querySelector(".choices");
 
 let choiceSelected = 0;
 let gameFinished = 0;
+const maxScore = 5;
 
 choices.addEventListener('click', (event) => {
   let target = event.target;
-  if (checkValid(target.id) && !choiceSelected) {
+  if (checkValid(target.id) && !choiceSelected && !gameFinished) {
     highlightChoices(target);
-    if (humanScore !== 5 && computerScore !== 5) {
+    if (humanScore !== maxScore && computerScore !== maxScore) {
       choiceSelected = 1;
       const computerSelection = getComputerChoice();
       
       let outcome = playRound(target.id, computerSelection, humanChoiceText, computerChoiceText);
-      roundCount++;
-      round.textContent = `Round ${roundCount}`;
       updateScore(outcome);
       continueDisplay(target);
+      displayComputerChoice(computerSelection);
+      displayRoundWinner(outcome);
+      if (humanScore === maxScore || computerScore === maxScore) displayGameWinner(humanScore);
     }
-    if (humanScore == 5) {
-      winner.textContent = "You Won!!";
-    }
-    else if (computerScore == 5) {
-      winner.textContent = "Computer Won.";
+    else {
+      gameFinished = 1;
     }
   }
 })
@@ -65,6 +62,56 @@ function continueDisplay(target) {
   })
 }
 
+function displayRoundWinner(outcome) {
+  const winner = document.querySelector(".winner");
+  const winnerText = document.createElement("p");
+  if (outcome === "win") {
+    winnerText.textContent = "You Win!";
+  }
+  else if (outcome === "lose") {
+    winnerText.textContent = "You Lose";
+  }
+  else {
+    winnerText.textContent = "Its a Draw";
+  }
+  winner.appendChild(winnerText);
+}
+
+function displayGameWinner(humanScore) {
+  const winnerMenu = document.createElement("div");
+  winnerMenu.classList.add("menu");
+  const gameWinner = document.createElement("p");
+  gameWinner.textContent = humanScore === maxScore ? "You Won!" : "You lost.";
+  winnerMenu.appendChild(gameWinner);
+
+  const playAgainBtn = document.createElement("button");
+  playAgainBtn.textContent = "Play Again";
+  winnerMenu.appendChild(playAgainBtn);
+
+  playAgainBtn.addEventListener("click", event => {
+    resetGame()
+  });
+
+  document.querySelector("body").appendChild(winnerMenu);
+
+  const menuOverlay = document.createElement("div");
+  menuOverlay.classList.add("overlay");
+  document.querySelector("body").appendChild(menuOverlay);
+}
+
+function resetGame() {
+  resetChoice();
+  roundCount = 1;
+  humanScore = 0;
+  computerScore = 0;
+  humanScoreText.textContent = `Your Score: 0`;
+  computerScoreText.textContent = `Computer Score: 0`;
+  round.textContent = `Round ${roundCount}`;
+
+  document.querySelector(".menu").remove();
+  document.querySelector(".overlay").remove();
+}
+
 function updateScore(outcome) {
   // Increment human if win
   if (outcome === "win") {
@@ -79,9 +126,15 @@ function updateScore(outcome) {
 }
 
 function resetChoice() {
-  const choices = document.querySelector(".choices");
   document.querySelector(".continue").remove();
   document.querySelector(".choices p").remove();
+
+  document.querySelector(".computerIcon").remove();
+  console.log(document.querySelector(".computerContainer p"));
+  document.querySelector(".computerContainer p").remove();
+  document.querySelector(".winner p").remove();
+  roundCount++; 
+  round.textContent = `Round ${roundCount}`;
   choiceSelected = 0;
 }
 
@@ -103,6 +156,19 @@ function highlightChoices(target) {
   const selectedText = document.createElement("p");
   selectedText.textContent = "You Played";
   target.parentNode.appendChild(selectedText);
+}
+
+function displayComputerChoice(computerChoice) {
+  const computerChoiceIcon = document.createElement("div");
+  computerChoiceIcon.classList.add("computerIcon")
+  computerChoiceIcon.id = computerChoice;
+
+  const computerContainer = document.querySelector(".computerContainer");
+  computerContainer.appendChild(computerChoiceIcon);
+
+  const computerChoiceText = document.createElement("p");
+  computerChoiceText.textContent = "Computer Played";
+  computerContainer.appendChild(computerChoiceText);
 }
 
 // CREATE function getComputerChoice
@@ -133,10 +199,6 @@ function getComputerChoice() {
 function playRound(humanChoice, computerChoice, humanChoiceText, computerChoiceText) {
   let outcome = "";
   const results = document.querySelector(".results");
-
-  computerChoiceText.textContent = `The computer played ${computerChoice}`
-
-  results.appendChild(computerChoiceText);
 
   // Check if draw
   if (humanChoice == computerChoice) {
