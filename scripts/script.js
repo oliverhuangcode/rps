@@ -38,10 +38,11 @@ choices.addEventListener('click', (event) => {
       
       let outcome = playRound(target.id, computerSelection, humanChoiceText, computerChoiceText);
       updateScore(outcome);
+      displayChoiceSelected(target);
       displayContinue(target);
       displayComputerChoice(computerSelection);
       displayRoundWinner(outcome);
-      displayChoiceSelected(target);
+      
       choiceSelected = 1;
 
       // Check game finished and display

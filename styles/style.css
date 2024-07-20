@@ -52,7 +52,6 @@ body {
   transition: all .2s ease-in-out;
   border: none;
   cursor: pointer;
-  margin-bottom: 18px;
 }
 
 #rock {
