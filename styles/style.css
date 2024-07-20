@@ -6,12 +6,20 @@
 body {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+}
+
+.title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 66px;
+  margin: 32px 0;
 }
 
 .round {
   text-align: center;
   font-weight: 700;
-  font-size: 66px;
+  font-size: 42px;
   margin-bottom: 24px;
 }
 .score {
@@ -26,11 +34,10 @@ body {
 .choices {
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 50px;
 }
 
-.choices button {
+.choice {
   background-repeat: no-repeat;
   background-color: #9381FF;
   border-radius: 20%;
@@ -43,23 +50,58 @@ body {
   cursor: pointer;
 }
 
-.choices #rock {
+.choice#rock {
   background-image: url(../images/rock1.png);
 }
 
-.choices #paper {
+.choice#paper {
   background-image: url(../images/paper1.png);
 }
 
-.choices #scissors {
+.choice#scissors {
   background-image: url(../images/scissors1.png);
 }
 
-.choices button:hover {
+button:hover {
   background-color: #8474e6;
   transform: scale(1.1); 
 }
 
-.choices button:active {
+button:active {
   background-color: #675ab3;
+}
+
+.choices p {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
+.choiceContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.continue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.continue {
+  border-radius: 10px;
+  background-color: #B8B8FF;
+  border: none;
+  color: white;
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+  padding: 10px 24px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  display: flex;
 }
