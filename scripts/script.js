@@ -28,19 +28,23 @@ let choiceSelected = 0;
 let gameFinished = 0;
 const maxScore = 5;
 
+// Rock paper scissor button listener
 choices.addEventListener('click', (event) => {
   let target = event.target;
+  // Check choice clicked and game still continuing
   if (checkValid(target.id) && !choiceSelected && !gameFinished) {
-    highlightChoices(target);
     if (humanScore !== maxScore && computerScore !== maxScore) {
-      choiceSelected = 1;
       const computerSelection = getComputerChoice();
       
       let outcome = playRound(target.id, computerSelection, humanChoiceText, computerChoiceText);
       updateScore(outcome);
-      continueDisplay(target);
+      displayContinue(target);
       displayComputerChoice(computerSelection);
       displayRoundWinner(outcome);
+      displayChoiceSelected(target);
+      choiceSelected = 1;
+
+      // Check game finished and display
       if (humanScore === maxScore || computerScore === maxScore) displayGameWinner(humanScore);
     }
     else {
@@ -49,32 +53,23 @@ choices.addEventListener('click', (event) => {
   }
 })
 
-function continueDisplay(target) {
+// Add played text under choice
+function displayChoiceSelected(target) {
+  const selectedText = document.createElement("p");
+  selectedText.textContent = "You Played";
+  target.parentNode.appendChild(selectedText);
+}
+
+// Display continue button
+function displayContinue(target) {
   const continueBtn = document.createElement("button");
   continueBtn.classList.add("continue");
   continueBtn.textContent = "Continue";
   target.parentNode.appendChild(continueBtn)
-  const continueDiv = document.querySelector(".continue");
-  //continueDiv.appendChild(continueBtn)
 
   continueBtn.addEventListener('click', event => {
     resetChoice();
   })
-}
-
-function displayRoundWinner(outcome) {
-  const winner = document.querySelector(".winner");
-  const winnerText = document.createElement("p");
-  if (outcome === "win") {
-    winnerText.textContent = "You Win!";
-  }
-  else if (outcome === "lose") {
-    winnerText.textContent = "You Lose";
-  }
-  else {
-    winnerText.textContent = "Its a Draw";
-  }
-  winner.appendChild(winnerText);
 }
 
 function displayGameWinner(humanScore) {
@@ -99,32 +94,22 @@ function displayGameWinner(humanScore) {
   document.querySelector("body").appendChild(menuOverlay);
 }
 
-function resetGame() {
-  resetChoice();
-  roundCount = 1;
-  humanScore = 0;
-  computerScore = 0;
-  humanScoreText.textContent = `Your Score: 0`;
-  computerScoreText.textContent = `Computer Score: 0`;
-  round.textContent = `Round ${roundCount}`;
-
-  document.querySelector(".menu").remove();
-  document.querySelector(".overlay").remove();
-}
-
-function updateScore(outcome) {
-  // Increment human if win
+function displayRoundWinner(outcome) {
+  const winner = document.querySelector(".winner");
+  const winnerText = document.createElement("p");
   if (outcome === "win") {
-    humanScore++;
-    humanScoreText.textContent = `Your Score: ${humanScore}`;
+    winnerText.textContent = "You Win!";
   }
-  // Increment computer if lose
   else if (outcome === "lose") {
-    computerScore++;
-    computerScoreText.textContent = `Computer Score: ${computerScore}`;
+    winnerText.textContent = "You Lose";
   }
+  else {
+    winnerText.textContent = "Its a Draw";
+  }
+  winner.appendChild(winnerText);
 }
 
+// Reset choice selected UI after continue is pressed and increment round
 function resetChoice() {
   document.querySelector(".continue").remove();
   document.querySelector(".choices p").remove();
@@ -138,6 +123,35 @@ function resetChoice() {
   choiceSelected = 0;
 }
 
+// Reset entire game to start
+function resetGame() {
+  resetChoice();
+  roundCount = 1;
+  humanScore = 0;
+  computerScore = 0;
+  humanScoreText.textContent = `Your Score: 0`;
+  computerScoreText.textContent = `Computer Score: 0`;
+  round.textContent = `Round ${roundCount}`;
+
+  document.querySelector(".menu").remove();
+  document.querySelector(".overlay").remove();
+}
+
+// Check who won and update score
+function updateScore(outcome) {
+  // Increment human if win
+  if (outcome === "win") {
+    humanScore++;
+    humanScoreText.textContent = `Your Score: ${humanScore}`;
+  }
+  // Increment computer if lose
+  else if (outcome === "lose") {
+    computerScore++;
+    computerScoreText.textContent = `Computer Score: ${computerScore}`;
+  }
+}
+
+// Check choice is clicked not div
 function checkValid(target) {
   switch(target) {
     case "rock":
@@ -152,12 +166,7 @@ function checkValid(target) {
   }
 }
 
-function highlightChoices(target) {
-  const selectedText = document.createElement("p");
-  selectedText.textContent = "You Played";
-  target.parentNode.appendChild(selectedText);
-}
-
+// Display icon according to what computer played
 function displayComputerChoice(computerChoice) {
   const computerChoiceIcon = document.createElement("div");
   computerChoiceIcon.classList.add("computerIcon")
@@ -171,34 +180,27 @@ function displayComputerChoice(computerChoice) {
   computerContainer.appendChild(computerChoiceText);
 }
 
-// CREATE function getComputerChoice
+// Randomly generated computer choice
 function getComputerChoice() {
-  // SET choice to empty string
   let choice = "";
   // GET random number from 0-2 for rock paper scissors
   let randomNum = Math.floor(Math.random() * 3);
-  // IF random number is 0 THEN
   if (randomNum === 0) {
-    // SET choice to rock
     choice = "rock";
   }
-  // ELSE IF random number is 1 THEN
   else if (randomNum === 1) {
-    // SET choice to paper
     choice = "paper";
   }
-  // ELSE IF random number is 2 THEN
   else if (randomNum === 2) {
-    // SET choice to scissors
     choice = "scissors";
   }
 
   return choice;
 }
 
-function playRound(humanChoice, computerChoice, humanChoiceText, computerChoiceText) {
+// Round logic to check who won
+function playRound(humanChoice, computerChoice) {
   let outcome = "";
-  const results = document.querySelector(".results");
 
   // Check if draw
   if (humanChoice == computerChoice) {
